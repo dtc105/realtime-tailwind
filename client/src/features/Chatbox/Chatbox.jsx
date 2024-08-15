@@ -1,19 +1,16 @@
-import List from './components/List/List.jsx';
-import Chat from './components/Chat/Chat.jsx';
-import Details from './components/Details/Details.jsx';
-import React from 'react';
+import LeftBar from "./components/LeftBar.jsx";
+import Chat from "./components/Chat.jsx";
+import RightBar from "./components/RightBar.jsx";
+import { useState } from "react";
 
 function Chatbox() {
-    
-    
-    
+    const [menuOpen, setMenuOpen] = useState(0); // 0-Chat 1-LeftBar 2-RightBar
+
     return (
-        <div className="chatbox flex justify-center items-center h-screen w-screen">
-            <div className="w-3/5 m-auto">
-                <List />
-                <Chat />
-                <Details />
-            </div>
+        <div className="w-screen h-screen grid lg:grid-cols-5 grid-cols-1 bg-tran" id="chatbox">
+            <LeftBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <Chat menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <RightBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
     );
 }

@@ -2,3 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background: url("/background.png");
+}
+
+.bg-tran {
+    background-color: #3457;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    font-size: 18px;
+
+    span.message {
+        width: fit-content;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.25rem;
+        background-color: #cbd5e1;
+    }
+
+    span.time {
+        font-size: 0.8em;
+        color: #e3e3e4
+    }
+
+    &.own {
+        align-self: flex-end;
+        display: flex;
+        align-items: flex-end;
+        
+        span.message {
+            background-color: #7dd3fc;
+        }
+    }
+}

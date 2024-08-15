@@ -1,13 +1,11 @@
-import Chatbox from './features/Chatbox/Chatbox.jsx';
-import React from 'react';
+import Chatbox from "./features/Chatbox/Chatbox.jsx";
 
 function App() {
-  
-    return (
-        <>
-            <Chatbox />
-        </>
-    );
+  return (
+    <>
+      <Chatbox />
+    </>
+  );
 }
 
 export default App;
