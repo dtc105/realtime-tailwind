@@ -4,17 +4,17 @@ import { useState } from 'react';
 function Chat(props) {
     const isOpen = props.menuOpen === 0;
     const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
-    const [newText, setNewText] = useState("");
+    const [newMessage, setNewMessage] = useState("");
 
     function handleEmoji(e) {
-        setNewText(prev => prev + e.emoji);
+        setNewMessage(prev => prev + e.emoji);
         setEmojiMenuOpen(false);
     }
 
     function handleSend() {
-        if (newText !== "") {
-            console.log(newText);
-            setNewText("");
+        if (newMessage !== "") {
+            console.log(newMessage);
+            setNewMessage("");
         }
     }
 
@@ -34,7 +34,7 @@ function Chat(props) {
                 </button> 
                 <button 
                     className="user flex-1 flex justify-start items-center gap-3 p-1 px-4"
-                    onClick={() => {/* Go to user profile */}}
+                    onClick={() => {/* Go to user profile function */}}
                 > {/* Go to user profile */}
                     <img 
                         src="/avatar.svg" 
@@ -93,8 +93,9 @@ function Chat(props) {
                     type="text" 
                     className="flex-1 mx-2 px-2 rounded"
                     placeholder={`Message Jane Doe`} 
-                    value={newText}
-                    onChange={(e) => setNewText(e.target.value)}
+                    value={newMessage}
+                    onChange={e => setNewMessage(e.target.value)}
+                    onKeyUp={e => e.code === "Enter" && handleSend()}
                 />
                 <button 
                     type="submit" 
