@@ -1,5 +1,5 @@
 import EmojiPicker from 'emoji-picker-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 function Chat(props) {
 
@@ -25,11 +25,8 @@ function Chat(props) {
     }
 
 
-    // ---
-    // Scroll
-
     return (
-        <div className={`flex flex-col h-sscreen lg:col-span-3 lg:flex ${isOpen ? "block" : "hidden"}`}>
+        <div className={`flex flex-col h-sscreen lg:col-span-3 lg:flex lg:border-x ${isOpen ? "block" : "hidden"}`}>
             {/* Header */}
             <header className="flex justify-center items-center px-2 py-3 bg-slate-700">
                 <button 
@@ -66,7 +63,10 @@ function Chat(props) {
             </header>
 
             {/* Texts List */}
-            <div id="texts" className="flex flex-1 flex-col mx-2 gap-2 overflow-y-auto scrollbar-hide">
+            <div 
+                id="texts" 
+                className="flex flex-1 flex-col mx-2 gap-2 overflow-y-auto scrollbar-hide"
+            >
                 <div className="w-2/3 text">
                     <span className="message">hello john doe wussup blah blah blah blah</span>
                     <span className="time">1 min ago</span>
