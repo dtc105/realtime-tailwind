@@ -2,15 +2,21 @@ import EmojiPicker from 'emoji-picker-react';
 import { useState } from 'react';
 
 function Chat(props) {
+
+    // ---
+    // Message and Emoji
+    // ---
     const isOpen = props.menuOpen === 0;
     const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
     const [newMessage, setNewMessage] = useState("");
 
+    // Add emoji to message
     function handleEmoji(e) {
         setNewMessage(prev => prev + e.emoji);
         setEmojiMenuOpen(false);
     }
 
+    // Send message and reset input
     function handleSend() {
         if (newMessage !== "") {
             console.log(newMessage);
@@ -18,18 +24,22 @@ function Chat(props) {
         }
     }
 
+
+    // ---
+    // Scroll
+
     return (
-        <div className={`flex flex-col lg:col-span-3 lg:flex ${isOpen ? "block" : "hidden"}`}>
+        <div className={`flex flex-col h-sscreen lg:col-span-3 lg:flex ${isOpen ? "block" : "hidden"}`}>
             {/* Header */}
-            <header className="flex justify-center items-center p-2 py-3 bg-slate-700">
+            <header className="flex justify-center items-center px-2 py-3 bg-slate-700">
                 <button 
-                    className="block lg:hidden p-1 px-2 lg:hover:scale-105 transition"
+                    className="block lg:hidden px-2 py-1 lg:hover:scale-105 transition"
                     onClick={() => props.setMenuOpen(1)}
                 > {/* Switch to LeftBar */}
                     <img 
                         src="/list.svg" 
                         alt="menu" 
-                        className="h-7" 
+                        className="h-8" 
                     />
                 </button> 
                 <button 
@@ -39,9 +49,9 @@ function Chat(props) {
                     <img 
                         src="/avatar.svg" 
                         alt="avatar" 
-                        className="h-7 object-cover" 
+                        className="h-8 object-cover" 
                     />
-                    <h2 className="text-2xl leading-7 text-zinc-100">Jane Doe</h2>
+                    <h2 className="text-2xl leading-8 text-zinc-100">Jane Doe</h2>
                 </button>
                 <button 
                     className="block lg:hidden p-1 px-2 lg:hover:scale-105 transition"
@@ -50,13 +60,61 @@ function Chat(props) {
                     <img 
                         src="/three-dots.svg" 
                         alt="menu" 
-                        className="h-7" 
+                        className="h-8" 
                     />
                 </button> 
             </header>
 
             {/* Texts List */}
-            <div className="flex flex-1 flex-col mx-2 gap-2" id="texts">
+            <div id="texts" className="flex flex-1 flex-col mx-2 gap-2 overflow-y-auto scrollbar-hide">
+                <div className="w-2/3 text">
+                    <span className="message">hello john doe wussup blah blah blah blah</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">sup qqqqqqqqqqqqqqqqqqq</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set </span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 text">
+                    <span className="message">hello john doe wussup blah blah blah blah</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">sup qqqqqqqqqqqqqqqqqqq</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set </span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 text">
+                    <span className="message">hello john doe wussup blah blah blah blah</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">sup qqqqqqqqqqqqqqqqqqq</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set </span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 text">
+                    <span className="message">hello john doe wussup blah blah blah blah</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">sup qqqqqqqqqqqqqqqqqqq</span>
+                    <span className="time">1 min ago</span>
+                </div>
+                <div className="w-2/3 own text">
+                    <span className="message">Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set </span>
+                    <span className="time">1 min ago</span>
+                </div>
                 <div className="w-2/3 text">
                     <span className="message">hello john doe wussup blah blah blah blah</span>
                     <span className="time">1 min ago</span>
@@ -72,7 +130,7 @@ function Chat(props) {
             </div>
 
             {/* Message Input */}
-            <div className=" relative flex bg-slate-700 p-2 py-3">
+            <div className="flex relative bg-slate-800 p-2 py-3">
                 <button
                     onClick={() => setEmojiMenuOpen(prev => !prev)}
                     className="p-1 px-2"
@@ -80,7 +138,7 @@ function Chat(props) {
                     <img 
                         src="/emoji-sunglasses-fill.svg" 
                         alt="emoji menu" 
-                        className="h-7"
+                        className="h-8"
                     />
                 </button>
                 <div className="absolute bottom-full left-0">

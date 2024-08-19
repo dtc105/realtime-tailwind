@@ -4,10 +4,30 @@
 
 body {
     background: url("/background.png");
+    width: 100vw;
+    height: 100vh;
+    min-height: 100svh;
 }
+
+
+/* Custom Classes */
 
 .bg-tran {
     background-color: #3457;
+}
+
+.h-sscreen {
+    height: 100svh;
+}
+
+/* Hide scrollbar but still allow scrolling */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .text {
@@ -16,14 +36,14 @@ body {
     max-width: 70%;
     font-size: 18px;
 
-    span.message {
+    .message {
         width: fit-content;
         padding: 0.1rem 0.3rem;
         border-radius: 0.25rem;
         background-color: #cbd5e1;
     }
 
-    span.time {
+    .time {
         font-size: 0.8em;
         color: #e3e3e4
     }
@@ -33,7 +53,7 @@ body {
         display: flex;
         align-items: flex-end;
         
-        span.message {
+        .message {
             background-color: #7dd3fc;
         }
     }
