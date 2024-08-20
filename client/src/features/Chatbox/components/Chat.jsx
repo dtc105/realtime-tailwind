@@ -26,7 +26,7 @@ function Chat(props) {
 
 
     return (
-        <div className={`flex flex-col h-sscreen lg:col-span-3 lg:flex lg:border-x ${isOpen ? "block" : "hidden"}`}>
+        <div className={`flex flex-col h-smscreen lg:col-span-3 lg:flex lg:border-x ${isOpen ? "block" : "hidden"}`}>
             {/* Header */}
             <header className="flex justify-center items-center px-2 py-3 bg-slate-700">
                 <button 

@@ -9,6 +9,7 @@ body {
     height: 100vh;
     min-height: 100svh;
     overflow: hidden;
+    touch-action: none !important;
 }
 
 
@@ -17,11 +18,11 @@ body {
 /* Custom Classes */
 /* -------------- */
 
-.bg-tran {
+/* .bg-tran {
     background-color: #345a;
-}
+} */
 
-.h-sscreen {
+.h-smscreen {
     height: 100svh;
     max-height: 100svh;
     min-height: 100svh;

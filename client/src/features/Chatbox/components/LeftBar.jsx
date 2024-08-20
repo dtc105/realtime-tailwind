@@ -78,7 +78,7 @@ function LeftBar(props) {
     ]);
 
     return (
-        <div className={`overflow-y-hidden leftbar h-sscreen lg:flex flex-col bg-trans ${isOpen ? "flex" : "hidden"}`}>
+        <div className={`overflow-y-hidden leftbar h-smscreen lg:flex flex-col bg-trans ${isOpen ? "flex" : "hidden"}`}>
             {/* Header */}
             <header className="flex justify-between items-center px-4 py-3 max-h-16 bg-slate-700">
                 {/* User */}
@@ -99,11 +99,11 @@ function LeftBar(props) {
 
             {/* User Search and Add */}
             <nav 
-                className="flex items-center"
+                className="flex items-center justify-center gap-4"
                 onClick={() => document.getElementById("userSearch").focus()}
             >
                 {/* User Search */}
-                <div className="userSearch flex items-center gap-2 bg-tran w-fit px-2 py-1 rounded mx-auto my-2 border">
+                <div className="userSearch flex items-center gap-2 bg-tran w-fit px-2 py-1 rounded my-2 border">
                     <label htmlFor="userSearch">
                         <img 
                             src="/search.svg" 
@@ -121,29 +121,33 @@ function LeftBar(props) {
                 </div>
 
                 {/* User Add */}
-                <div className="userAdd">
-
-                </div>
+                <button className="p-2 border rounded bg-tran">
+                    <img 
+                        src="/pencil-square.svg" 
+                        alt="add user" 
+                        className="h-6"
+                    />
+                </button>
                 
             </nav>
 
             <hr />
 
             {/* Users List */}
-            <main className="flex-1 overflow-x-hidden overflow-y-auto scrollbar-hide">
-                <ul className="w-11/12 m-auto">
+            <main className="flex-1 overflow-y-auto scrollbar-hide overscroll-contain">
+                <ul className="my-1 cursor-pointer">
                     {
                         usersList.map((user, index) => {
                             return (
-                                <li key={index} className="flex gap-3 items-center">
+                                <li key={index} className="flex items-center gap-3 justify-center lg:hover:bg-tran rounded overflow-x-hidden">
                                     <img 
                                         src="/avatar.svg" 
                                         alt="avatar icon" 
                                         className="h-12"
                                     />
-                                    <div className="text">
-                                        <p className="username text-zinc-100 px-2 py-1 text-xl whitespace-nowrap">{user.username}</p>
-                                        <p className="previousMessage text-zinc-300 text-md px-2 py-1 whitespace-nowrap overflow-hidden">{user.message}</p>
+                                    <div className="text flex-1">
+                                        <p className="username text-zinc-100 py-1 text-xl whitespace-nowrap text-ellipsis overflow-x-hidden">{user.username}</p>
+                                        <p className="previousMessage text-zinc-300 text-md py-1 whitespace-nowrap text-ellipsis overflow-x-hidden">{user.message}</p>
                                     </div>
                                 </li>
                             )

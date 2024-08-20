@@ -6,8 +6,10 @@ export default {
   ],
   theme: {
     extend: {
-      
-    },
+      colors: {
+        "tran": "#345a"
+      }
+    }
   },
   plugins: [],
 }
