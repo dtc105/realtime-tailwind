@@ -18,16 +18,6 @@ body {
 /* Custom Classes */
 /* -------------- */
 
-/* .bg-tran {
-    background-color: #345a;
-} */
-
-.h-smscreen {
-    height: 100svh;
-    max-height: 100svh;
-    min-height: 100svh;
-}
-
 .border-y-seperator {
     border-top-width: 1px;
     border-bottom-width: 1px;

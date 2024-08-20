@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 function LeftBar(props) {
     const isOpen = props.menuOpen === 1;
+    const [searchText, setSearchText] = useState("");
     const [usersList, setUsersList] = useState([
         {
             username: "qaz",
@@ -77,8 +78,17 @@ function LeftBar(props) {
         }
     ]);
 
+    function handleAddClick(e) {
+        if (!searchText) {
+            document.getElementById("userSearch").focus();
+        } else {
+            alert(`Adding user ${searchText}`);
+            setSearchText("");
+        }
+    }
+
     return (
-        <div className={`overflow-y-hidden leftbar h-smscreen lg:flex flex-col bg-trans ${isOpen ? "flex" : "hidden"}`}>
+        <div className={`leftBar fixed w-full lg:static overflow-y-hidden leftbar h-smscreen lg:flex flex-col bg-tran ${isOpen ? "flex" : "hidden"}`}>
             {/* Header */}
             <header className="flex justify-between items-center px-4 py-3 max-h-16 bg-slate-700">
                 {/* User */}
@@ -93,17 +103,23 @@ function LeftBar(props) {
                     className={`lg:hidden ${isOpen ? "block" : "hidden"}`}
                     onClick={() => props.setMenuOpen(0)}
                 >
-                    <img src="/arrow-right.svg" alt="arrow back" className="h-8" />
+                    <img 
+                        src="/arrow-right.svg" 
+                        alt="arrow back" 
+                        className="h-8" 
+                    />
                 </button>
             </header>
 
             {/* User Search and Add */}
             <nav 
                 className="flex items-center justify-center gap-4"
-                onClick={() => document.getElementById("userSearch").focus()}
             >
                 {/* User Search */}
-                <div className="userSearch flex items-center gap-2 bg-tran w-fit px-2 py-1 rounded my-2 border">
+                <div 
+                    className="userSearch flex items-center gap-2 bg-tran w-fit px-2 py-1 rounded my-2 border"
+                    onClick={() => document.getElementById("userSearch").focus()}
+                >
                     <label htmlFor="userSearch">
                         <img 
                             src="/search.svg" 
@@ -117,15 +133,20 @@ function LeftBar(props) {
                         id="userSearch"
                         placeholder="Search"
                         className="px-2 py-1 bg-transparent text-zinc-100 border-none outline-none" 
+                        onChange={(e) => setSearchText(e.target.value)}
+                        value={searchText}
                     />
                 </div>
 
                 {/* User Add */}
-                <button className="p-2 border rounded bg-tran">
+                <button 
+                    className="p-2.5 border rounded bg-tran"
+                    onClick={handleAddClick}
+                >
                     <img 
                         src="/pencil-square.svg" 
                         alt="add user" 
-                        className="h-6"
+                        className="h-5"
                     />
                 </button>
                 
@@ -135,7 +156,7 @@ function LeftBar(props) {
 
             {/* Users List */}
             <main className="flex-1 overflow-y-auto scrollbar-hide overscroll-contain">
-                <ul className="my-1 cursor-pointer">
+                <ul className="my-1 cursor-pointer flex flex-col gap-4">
                     {
                         usersList.map((user, index) => {
                             return (
@@ -146,8 +167,8 @@ function LeftBar(props) {
                                         className="h-12"
                                     />
                                     <div className="text flex-1">
-                                        <p className="username text-zinc-100 py-1 text-xl whitespace-nowrap text-ellipsis overflow-x-hidden">{user.username}</p>
-                                        <p className="previousMessage text-zinc-300 text-md py-1 whitespace-nowrap text-ellipsis overflow-x-hidden">{user.message}</p>
+                                        <p className="username text-zinc-100 py-0.5 text-xl whitespace-nowrap text-ellipsis overflow-x-hidden">{user.username}</p>
+                                        <p className="previousMessage text-zinc-300 text-base py-0.5 whitespace-nowrap text-ellipsis overflow-x-hidden">{user.message}</p>
                                     </div>
                                 </li>
                             )

@@ -8,7 +8,14 @@ export default {
     extend: {
       colors: {
         "tran": "#345a"
-      }
+      },
+      borderRadius: {
+        "round": "50%"
+      },
+      height: {
+        "smscreen": "100svh"
+      },
+      
     }
   },
   plugins: [],

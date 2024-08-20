@@ -1,5 +1,5 @@
 import EmojiPicker from 'emoji-picker-react';
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 function Chat(props) {
 
@@ -24,9 +24,8 @@ function Chat(props) {
         }
     }
 
-
     return (
-        <div className={`flex flex-col h-smscreen lg:col-span-3 lg:flex lg:border-x ${isOpen ? "block" : "hidden"}`}>
+        <div className={`lg:static fixed flex flex-col h-smscreen lg:col-span-3 lg:flex lg:border-x bg-tran ${isOpen ? "block" : "hidden"}`}>
             {/* Header */}
             <header className="flex justify-center items-center px-2 py-3 bg-slate-700">
                 <button 
@@ -150,6 +149,7 @@ function Chat(props) {
                 <input 
                     type="text" 
                     className="flex-1 mx-2 px-2 rounded"
+                    id="textInput"
                     placeholder={`Message Jane Doe`} 
                     value={newMessage}
                     onChange={e => setNewMessage(e.target.value)}
