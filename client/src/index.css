@@ -9,7 +9,7 @@ body {
     height: 100vh;
     min-height: 100svh;
     overflow: hidden;
-    touch-action: none !important;
+    touch-action: pan-x pan-y;
 }
 
 

@@ -1,5 +1,5 @@
 import EmojiPicker from 'emoji-picker-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 function Chat(props) {
 
@@ -9,6 +9,12 @@ function Chat(props) {
     const isOpen = props.menuOpen === 0;
     const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
     const [newMessage, setNewMessage] = useState("");
+
+    const endOfTexts = useRef(null);
+
+    useEffect(() => {
+        endOfTexts.current?.scrollIntoView();
+    }, []);
 
     // Add emoji to message
     function handleEmoji(e) {
@@ -64,7 +70,7 @@ function Chat(props) {
             {/* Texts List */}
             <div 
                 id="texts" 
-                className="flex flex-1 flex-col mx-2 gap-2 overflow-y-auto scrollbar-hide"
+                className="flex flex-1 flex-col mx-2 py-2 gap-2 overflow-y-auto scrollbar-hide"
             >
                 <div className="w-2/3 text">
                     <span className="message">hello john doe wussup blah blah blah blah</span>
@@ -126,7 +132,9 @@ function Chat(props) {
                     <span className="message">Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set Lorem ipsum dolor set </span>
                     <span className="time">1 min ago</span>
                 </div>
+                <div ref={endOfTexts}></div>
             </div>
+            
 
             {/* Message Input */}
             <div className="flex relative bg-slate-800 p-2 py-3">

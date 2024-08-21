@@ -176,7 +176,6 @@ function LeftBar(props) {
                     }
                 </ul>
             </main>
-
         </div>
     );
 }
