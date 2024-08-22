@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --blue: #7dd3fc;
+    --gray: #cbd5e1;
+}
+
 body {
     position: relative;
     background: url("/background.png");

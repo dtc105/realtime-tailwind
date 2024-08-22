@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        "tran": "#345a"
+        "tran": "#345a",
+        "myBlue": "#7dd3fc",
+        "myGray": "#cbd5e1"
       },
       borderRadius: {
         "round": "50%"

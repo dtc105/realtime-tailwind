@@ -6,7 +6,6 @@ function Chat(props) {
     // ---
     // Message and Emoji
     // ---
-    const isOpen = props.menuOpen === 0;
     const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
     const [newMessage, setNewMessage] = useState("");
 
@@ -31,7 +30,7 @@ function Chat(props) {
     }
 
     return (
-        <div className={`lg:static fixed flex flex-col h-smscreen lg:col-span-3 lg:flex lg:border-x bg-tran ${isOpen ? "block" : "hidden"}`}>
+        <div id="chat" className="lg:static fixed flex flex-col h-smscreen lg:col-span-3 lg:border-x bg-tran">
             {/* Header */}
             <header className="flex justify-center items-center px-2 py-3 bg-slate-700">
                 <button 

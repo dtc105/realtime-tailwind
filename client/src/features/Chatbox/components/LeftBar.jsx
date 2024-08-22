@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 function LeftBar(props) {
-    const isOpen = props.menuOpen === 1;
     const [searchText, setSearchText] = useState("");
     const [usersList, setUsersList] = useState([
         {
@@ -88,7 +87,7 @@ function LeftBar(props) {
     }
 
     return (
-        <div className={`leftBar fixed w-full lg:static overflow-y-hidden leftbar h-smscreen lg:flex flex-col bg-tran ${isOpen ? "flex" : "hidden"}`}>
+        <div id="leftbar" className="leftBar fixed w-full lg:static overflow-y-hidden leftbar h-smscreen flex flex-col bg-tran">
             {/* Header */}
             <header className="flex justify-between items-center px-4 py-3 max-h-16 bg-slate-700">
                 {/* User */}
@@ -100,7 +99,7 @@ function LeftBar(props) {
 
                 {/* Return button */}
                 <button 
-                    className={`lg:hidden ${isOpen ? "block" : "hidden"}`}
+                    className="lg:hidden"
                     onClick={() => props.setMenuOpen(0)}
                 >
                     <img 

@@ -1,18 +1,16 @@
 import { useState } from 'react';
 
 function RightBar(props) {
-    const isOpen = props.menuOpen === 2;
-
     const [chatSettingsOpen, setChatSettingsOpen] = useState(false);
     const [privacyHelpOpen, setPrivacyHelpOpen] = useState(false);
     const [sharedPhotosOpen, setSharedPhotosOpen] = useState(false);
     const [sharedFilesOpen, setSharedFilesOpen] = useState(false);
 
     return (
-        <main className={`fixed lg:static w-full h-smscreen bg-tran px-4 py-3 lg:block ${isOpen ? "block" : "hidden"}`}>
+        <main id="rightbar" className="fixed lg:static w-full h-smscreen bg-tran px-4 py-3">
             {/* Return Button */}
             <button
-                className={`lg:hidden ${isOpen ? "block" : "hidden"}`}
+                className="block lg:hidden"
                 onClick={() => props.setMenuOpen(0)}
             >
                 <img 
