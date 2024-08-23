@@ -12,7 +12,7 @@ function Chatbox(props) {
     }, [menuOpen]);
 
     return (
-        <div id="chatbox" className="overscroll-y-contain w-full h-full max-h-fit grid lg:grid-cols-5 grid-cols-1">
+        <div id="chatbox" className="fixed overscroll-y-contain w-full h-full max-h-fit grid lg:grid-cols-5 grid-cols-1">
             {
                 props.isSmallScreen 
                     ? (
