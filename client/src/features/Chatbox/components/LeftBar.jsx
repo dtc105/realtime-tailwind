@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import AddUser from './AddUser.jsx';
 
 function LeftBar(props) {
     const [searchText, setSearchText] = useState("");
+    const [isAddingUser, setIsAddingUser] = useState(false);
     const [usersList, setUsersList] = useState([
         {
             username: "qaz",
@@ -77,15 +79,6 @@ function LeftBar(props) {
         }
     ]);
 
-    function handleAddClick(e) {
-        if (!searchText) {
-            document.getElementById("userSearch").focus();
-        } else {
-            alert(`Adding user ${searchText}`);
-            setSearchText("");
-        }
-    }
-
     return (
         <div id="leftbar" className="leftBar fixed w-full lg:static overflow-y-hidden leftbar h-smscreen flex flex-col bg-tran">
             {/* Header */}
@@ -136,11 +129,12 @@ function LeftBar(props) {
                         value={searchText}
                     />
                 </div>
+                
 
                 {/* User Add */}
                 <button 
                     className="p-2.5 border rounded bg-tran"
-                    onClick={handleAddClick}
+                    onClick={() => setIsAddingUser(prev => !prev)}
                 >
                     <img 
                         src="/pencil-square.svg" 
@@ -148,8 +142,14 @@ function LeftBar(props) {
                         className="h-5"
                     />
                 </button>
-                
             </nav>
+            {
+                isAddingUser &&
+                <div className="addUserContainer absolute grid top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <AddUser setIsAddingUser={setIsAddingUser} />
+                </div>
+            }
+            
 
             <hr />
 

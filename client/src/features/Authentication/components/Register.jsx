@@ -1,6 +1,11 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Notification from './Notification.jsx';
+import { toast } from 'react-toastify';
+import { createUserWithEmailAndPassword as createUser } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "../../../lib/firebase.js";
 
 function Register(props) {
 
@@ -16,7 +21,7 @@ function Register(props) {
             .min(3, "Username must be 3 or more characters")
             .max(16, "Username may not be longer than 16 characters")
             .matches(/^\w.*\w$/g, "Username may not start or end with a special character")
-            .required("Username Required)"),
+            .required("Username Required"),
         email: Yup
             .string()
             .matches(/.+@.+\..+/g, "Must input a valid email")
@@ -28,9 +33,26 @@ function Register(props) {
             .required("Password Required")
     });
 
-    function submitRegister(values, actions) {
-        console.log(values);
-        actions.resetForm();
+    async function submitRegister(values, actions) {
+        try {
+            const res = await createUser(auth, values.email, values.password);
+
+            await setDoc(doc(db, "users", res.user.uid), {
+                username: values.username,
+                email: values.email,
+                id: res.user.uid,
+                blocked: [],
+                avatar: ""
+            });
+
+            await setDoc(doc(db, "userchats", res.user.uid), {
+                chats: []
+            });
+
+            toast.success("Account created! Please Login")
+        } catch(err) {
+            toast.error(err.message)
+        }
     }
     
     return (
@@ -103,6 +125,7 @@ function Register(props) {
             <p className="text-myGray block lg:hidden -mx-16 text-center">
                 Already have an account? <span className="cursor-pointer text-myBlue hover:text-zinc-100 py-2" onClick={() => props.setLoggingIn(true)}>Click here</span>
             </p>
+            <Notification />
         </div>
     );
 }

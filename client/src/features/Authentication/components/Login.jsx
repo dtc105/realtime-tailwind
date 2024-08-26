@@ -1,6 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Notification from './Notification.jsx';
+import { toast } from 'react-toastify';
 
 function Login(props) {
     
@@ -25,6 +27,7 @@ function Login(props) {
 
     function submitLogin(values, actions) {
         console.log(values);
+        toast.warn("Sup");
         actions.resetForm();
     }
     
@@ -83,6 +86,7 @@ function Login(props) {
                 <p className="text-myGray block lg:hidden text-center">
                     Need an account? <span className="cursor-pointer text-myBlue hover:text-zinc-100 py-2" onClick={() => props.setLoggingIn(false)}>Click here</span>
                 </p>
+                <Notification />
             </div>
             <div id="seperator" className="lg:block hidden border w-0 h-5/6"></div>
         </>
