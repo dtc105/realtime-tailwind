@@ -1,85 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddUser from './AddUser.jsx';
 import { useUserStore } from '../../../lib/userStore.js';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../../lib/firebase.js';
 
 function LeftBar(props) {
     const [searchText, setSearchText] = useState("");
     const [isAddingUser, setIsAddingUser] = useState(false);
     const { currentUser } = useUserStore();
-    const [usersList, setUsersList] = useState([
-        {
-            username: "qaz",
-            message: "sup"
-        },
-        {
-            username: "kodi",
-            message: "cum"
-        },
-        {
-            username: "dia",
-            message: "skibidi toilet ohio gyatt"
-        },
-        {
-            username: "adits87",
-            message: "imma say it"
-        },
-        {
-            username: "this is a really long username which might need to be capped at a 16 or 32 character limit",
-            message: "heres a really really longggggggg last message in which might need to be capped visually at 32-64 characters but maybe more or less or I could even change the size of the list to show the entire thing who knows?? not me tho"
-        },
-        {
-            username: "and one more",
-            message: "just for fun"
-        },
-        {
-            username: "qaz",
-            message: "sup"
-        },
-        {
-            username: "kodi",
-            message: "cum"
-        },
-        {
-            username: "dia",
-            message: "skibidi toilet ohio gyatt"
-        },
-        {
-            username: "adits87",
-            message: "imma say it"
-        },
-        {
-            username: "this is a really long username which might need to be capped at a 16 or 32 character limit",
-            message: "heres a really really longggggggg last message in which might need to be capped visually at 32-64 characters but maybe more or less or I could even change the size of the list to show the entire thing who knows?? not me tho"
-        },
-        {
-            username: "and one more",
-            message: "just for fun"
-        },
-        {
-            username: "qaz",
-            message: "sup"
-        },
-        {
-            username: "kodi",
-            message: "cum"
-        },
-        {
-            username: "dia",
-            message: "skibidi toilet ohio gyatt"
-        },
-        {
-            username: "adits87",
-            message: "imma say it"
-        },
-        {
-            username: "this is a really long username which might need to be capped at a 16 or 32 character limit",
-            message: "heres a really really longggggggg last message in which might need to be capped visually at 32-64 characters but maybe more or less or I could even change the size of the list to show the entire thing who knows?? not me tho"
-        },
-        {
-            username: "and one more",
-            message: "just for fun"
-        }
-    ]);
+    const [usersList, setUsersList] = useState([]);
+
+    useEffect(() => {
+        const unSub = onSnapshot(doc(db, "userchats", currentUser.id), async (res) => {
+            const items = res.data().chats;
+
+            const promises = items.map(async (item) => {
+                const userDocRef = doc(db, "user", item.receiverId);
+                const userDocSnap = await getDoc(userDocRef);
+
+                const user = userDocSnap.data();
+
+                return {...item, user};
+            });
+
+            const chatData = await Promise.all(promises);
+
+            setUsersList(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
+        });
+
+        return (() => {
+            unSub();
+        });
+    }, [currentUser]);
 
     return (
         <div id="leftbar" className="leftBar fixed w-full lg:static overflow-y-hidden leftbar h-smscreen flex flex-col bg-tran">
