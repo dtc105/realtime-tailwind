@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import AddUser from './AddUser.jsx';
+import { useUserStore } from '../../../lib/userStore.js';
 
 function LeftBar(props) {
     const [searchText, setSearchText] = useState("");
     const [isAddingUser, setIsAddingUser] = useState(false);
+    const { currentUser } = useUserStore();
     const [usersList, setUsersList] = useState([
         {
             username: "qaz",
@@ -85,7 +87,7 @@ function LeftBar(props) {
             <header className="flex justify-between items-center px-4 py-3 max-h-16 bg-slate-700">
                 {/* User */}
                 <button className="user flex items-center gap-3">
-                    <img src="/avatar.svg" alt="avatar icon" className="h-10"/>
+                    <img src={currentUser.avatar || "/avatar.svg"} alt="avatar icon" className="h-10"/>
                     <span className="text-2xl leading-10 text-zinc-100 whitespace-nowrap">John Doe</span>
                     <img src="/three-dots.svg" alt="profile info" className="h-8" />
                 </button>

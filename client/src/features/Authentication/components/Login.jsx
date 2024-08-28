@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Notification from './Notification.jsx';
 import { toast } from 'react-toastify';
+import { signInWithEmailAndPassword as signIn } from "firebase/auth";
+import { auth } from "../../../lib/firebase.js";
 
 function Login(props) {
     
@@ -12,12 +14,10 @@ function Login(props) {
     };
 
     const validationSchema = Yup.object().shape({
-        username: Yup
+        email: Yup
             .string()
-            .min(3, "Username must be 3 or more characters")
-            .max(16, "Username may not be longer than 16 characters")
-            .matches(/^\w.*\w$/g, "Username may not start or end with a special character")
-            .required("Username is required"),
+            .matches(/.+@.+\..+/g, "Must input a valid email")
+            .required("Email Required"),
         password: Yup
             .string()
             .min(8, "Password must be 8 or more characters")
@@ -25,10 +25,20 @@ function Login(props) {
             .required("Password is required")
     });
 
-    function submitLogin(values, actions) {
-        console.log(values);
-        toast.warn("Sup");
-        actions.resetForm();
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function submitLogin(values, _) {
+
+        setIsLoading(true);
+
+        try {
+            await signIn(auth, values.email, values.password);
+        } catch (err) {
+            console.log(err);
+            toast.error(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     }
     
     return (
@@ -43,19 +53,20 @@ function Login(props) {
                     validateOnBlur={true}
                 >
                     <Form className="contents">
-                        {/* Username Input */}
-                        <div className="usernameInput flex flex-col justify-center items-center">
+                        {/* Email Input */}
+                        <div className="emailInput flex flex-col justify-center items-center">
                             <ErrorMessage
-                                name="username"
+                                name="email"
                                 component="p"
                                 className="text-sm text-center text-orange-400 font-bold -mx-32 w-full"
                             />
                             <Field 
                                 autoComplete="off"
-                                id="loginUsername"
-                                name="username"
-                                placeholder="Username"
-                                className="my-1 p-2 rounded bg-zinc-100"
+                                id="registerEmail"
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                className="p-2 rounded"
                             />
                         </div>
 
@@ -77,7 +88,8 @@ function Login(props) {
 
                         <button
                             type="submit"
-                            className="bg-myBlue m-0 p-2 text-lg hover:bg-myGray rounded w-full"
+                            className={`bg-myBlue py-2 text-lg rounded w-full ${isLoading ? "cursor-wait bg-opacity-50" : "hover:bg-myGray"}`}
+                            disabled={isLoading}
                         >
                             Login
                         </button>

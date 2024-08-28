@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Notification from './Notification.jsx';
@@ -33,10 +33,15 @@ function Register(props) {
             .required("Password Required")
     });
 
-    async function submitRegister(values, actions) {
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function submitRegister(values, _) {
+        
+        setIsLoading(true);
+
         try {
             const res = await createUser(auth, values.email, values.password);
-
+            
             await setDoc(doc(db, "users", res.user.uid), {
                 username: values.username,
                 email: values.email,
@@ -51,7 +56,9 @@ function Register(props) {
 
             toast.success("Account created! Please Login")
         } catch(err) {
-            toast.error(err.message)
+            toast.error(err.message);
+        } finally {
+            setIsLoading(false);
         }
     }
     
@@ -116,7 +123,8 @@ function Register(props) {
 
                     <button
                         type="submit"
-                        className="bg-myBlue py-2 text-lg hover:bg-myGray rounded w-full"
+                        className={`bg-myBlue py-2 text-lg rounded w-full ${isLoading ? "cursor-wait bg-opacity-50" : "hover:bg-myGray"}`}
+                        disabled={isLoading}
                     >
                         Create Account
                     </button>
