@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import AddUser from './AddUser.jsx';
 import { useUserStore } from '../../../lib/userStore.js';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
-import { db } from '../../../lib/firebase.js';
+import { auth, db } from '../../../lib/firebase.js';
 
 function LeftBar(props) {
     const [searchText, setSearchText] = useState("");
@@ -38,8 +38,11 @@ function LeftBar(props) {
             {/* Header */}
             <header className="flex justify-between items-center px-4 py-3 max-h-16 bg-slate-700">
                 {/* User */}
-                <button className="user flex items-center gap-3">
-                    <img src={currentUser.avatar || "/avatar.svg"} alt="avatar icon" className="h-10"/>
+                <button 
+                    className="user flex items-center gap-3"
+                    onClick={() => auth.signOut()}    
+                >
+                    <img src={currentUser?.avatar || "/avatar.svg"} alt="avatar icon" className="h-10"/>
                     <span className="text-2xl leading-10 text-zinc-100 whitespace-nowrap">John Doe</span>
                     <img src="/three-dots.svg" alt="profile info" className="h-8" />
                 </button>

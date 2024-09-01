@@ -8,36 +8,36 @@ import { auth } from "../../../lib/firebase.js";
 
 function Login(props) {
     
-    const initialValues = {
-        username: "",
-        password: ""
+    const loginInitialValues = {
+        loginEmail: "",
+        loginPassword: ""
     };
 
-    const validationSchema = Yup.object().shape({
-        email: Yup
+    const loginValidationSchema = Yup.object().shape({
+        loginEmail: Yup
             .string()
             .matches(/.+@.+\..+/g, "Must input a valid email")
             .required("Email Required"),
-        password: Yup
+        loginPassword: Yup
             .string()
             .min(8, "Password must be 8 or more characters")
             .max(64, "Password must be 64 or less characters")
             .required("Password is required")
     });
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     async function submitLogin(values, _) {
 
-        setIsLoading(true);
+        setIsLoggingIn(true);
 
         try {
-            await signIn(auth, values.email, values.password);
+            await signIn(auth, values.loginEmail, values.loginPassword);
         } catch (err) {
             console.log(err);
             toast.error(err.message);
         } finally {
-            setIsLoading(false);
+            setIsLoggingIn(false);
         }
     }
     
@@ -46,50 +46,52 @@ function Login(props) {
             <div id="login" className="flex flex-col gap-8 lg:m-auto">
                 <h1 className="mb-8 text-4xl text-zinc-100 text-center">Login</h1>
                 <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
+                    initialValues={loginInitialValues}
+                    validationSchema={loginValidationSchema}
                     onSubmit={submitLogin}
                     validateOnChange={false}
                     validateOnBlur={true}
+                    id="loginForm"
                 >
                     <Form className="contents">
                         {/* Email Input */}
                         <div className="emailInput flex flex-col justify-center items-center">
                             <ErrorMessage
-                                name="email"
+                                name="loginEmail"
                                 component="p"
                                 className="text-sm text-center text-orange-400 font-bold -mx-32 w-full"
                             />
                             <Field 
                                 autoComplete="off"
-                                id="registerEmail"
-                                name="email"
+                                id="loginEmail"
+                                name="loginEmail"
                                 type="email"
                                 placeholder="Email"
-                                className="p-2 rounded"
+                                className="p-2 rounded bg-zinc-100 cursor-text"
                             />
                         </div>
 
                         {/* Password Input */}
                         <div className="passwordInput flex flex-col justify-center items-center">
                             <ErrorMessage
-                                name="password"
+                                name="loginPassword"
                                 component="p"
                                 className="text-sm text-center text-orange-400 font-bold -mx-32 w-full"
                             />
                             <Field 
                                 autoComplete="off"
                                 id="loginPassword"
-                                name="password"
+                                name="loginPassword"
+                                type="password"
                                 placeholder="Password"
-                                className="my-1 p-2 rounded bg-zinc-100"
+                                className="p-2 rounded bg-zinc-100 cursor-text"
                             />
                         </div>
 
                         <button
                             type="submit"
-                            className={`bg-myBlue py-2 text-lg rounded w-full ${isLoading ? "cursor-wait bg-opacity-50" : "hover:bg-myGray"}`}
-                            disabled={isLoading}
+                            className={`bg-myBlue py-2 text-lg rounded w-full ${isLoggingIn ? "cursor-wait bg-opacity-50" : "hover:bg-myGray"}`}
+                            disabled={isLoggingIn}
                         >
                             Login
                         </button>

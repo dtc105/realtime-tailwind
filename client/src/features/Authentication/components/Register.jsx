@@ -9,42 +9,42 @@ import { auth, db } from "../../../lib/firebase.js";
 
 function Register(props) {
 
-    const initialValues = {
-        username: "",
-        email: "",
-        password: ""
+    const registrationInitialValues = {
+        registerUsername: "",
+        registerEmail: "",
+        registerPassword: ""
     };
 
-    const validationSchema = Yup.object().shape({
-        username: Yup
+    const registrationValidationSchema = Yup.object().shape({
+        registerUsername: Yup
             .string()
             .min(3, "Username must be 3 or more characters")
             .max(16, "Username may not be longer than 16 characters")
             .matches(/^\w.*\w$/g, "Username may not start or end with a special character")
             .required("Username Required"),
-        email: Yup
+        registerEmail: Yup
             .string()
-            .matches(/.+@.+\..+/g, "Must input a valid email")
+            .matches(/.+@.+\..+/g, "Must input a valid registerEmail")
             .required("Email Required"),
-        password: Yup
+        registerPassword: Yup
             .string()
             .min(8, "Password must be 8 or more characters")
             .max(64, "Password must be 64 or less characters")
             .required("Password Required")
     });
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isRegistering, setIsRegistering] = useState(false);
 
     async function submitRegister(values, _) {
         
-        setIsLoading(true);
+        setIsRegistering(true);
 
         try {
-            const res = await createUser(auth, values.email, values.password);
+            const res = await createUser(auth, values.registerEmail, values.registerPassword);
             
             await setDoc(doc(db, "users", res.user.uid), {
-                username: values.username,
-                email: values.email,
+                username: values.registerUsername,
+                email: values.registerEmail,
                 id: res.user.uid,
                 blocked: [],
                 avatar: ""
@@ -58,7 +58,7 @@ function Register(props) {
         } catch(err) {
             toast.error(err.message);
         } finally {
-            setIsLoading(false);
+            setIsRegistering(false);
         }
     }
     
@@ -66,48 +66,51 @@ function Register(props) {
         <div id="register" className="flex flex-col gap-8 lg:m-auto">
             <h1 className="mb-8 text-4xl text-zinc-100 text-center">Register</h1>
             <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
+                initialValues={registrationInitialValues}
+                validationSchema={registrationValidationSchema}
                 onSubmit={submitRegister}
+                validateOnChange={false}
+                validateOnBlur={true}
+                id="registerForm"
             >
                 <Form className="contents">
                     {/* Username Input */}
-                    <div className="usernameInput flex flex-col justify-center items-center">
+                    <div className="registerUsernameInput flex flex-col justify-center items-center">
                         <ErrorMessage
-                            name="username"
+                            name="registerUsername"
                             component="p"
                             className="text-sm text-center text-orange-400 font-bold -mx-32 w-full"
                         />
                         <Field 
                             autoComplete="off"
                             id="registerUsername"
-                            name="username"
+                            name="registerUsername"
                             placeholder="Username"
-                            className="p-2 rounded"
+                            className="p-2 rounded bg-zinc-100 cursor-text"
                         />
                     </div>
 
                     {/* Email Input */}
-                    <div className="emailInput flex flex-col justify-center items-center">
+                    <div className="registerEmailInput flex flex-col justify-center items-center">
                         <ErrorMessage
-                            name="email"
+                            name="registerEmail"
                             component="p"
                             className="text-sm text-center text-orange-400 font-bold -mx-32 w-full"
                         />
                         <Field 
                             autoComplete="off"
                             id="registerEmail"
-                            name="email"
                             type="email"
+                            name="registerEmail"
                             placeholder="Email"
-                            className="p-2 rounded"
+                            className="p-2 rounded bg-zinc-100 cursor-text"
                         />
                     </div>
 
                     {/* Password Input */}
-                    <div className="passwordInput flex flex-col justify-center items-center">
+                    <div className="registerPasswordInput flex flex-col justify-center items-center">
                         <ErrorMessage
-                            name="password"
+                            name="registerPassword"
                             component="p"
                             className="text-sm text-center text-orange-400 font-bold -mx-32 w-full"
                         />
@@ -115,16 +118,16 @@ function Register(props) {
                             autoComplete="off"
                             id="registerPassword"
                             type="password"
-                            name="password"
+                            name="registerPassword"
                             placeholder="Password"
-                            className="p-2 rounded"
+                            className="p-2 rounded bg-zinc-100 cursor-text"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className={`bg-myBlue py-2 text-lg rounded w-full ${isLoading ? "cursor-wait bg-opacity-50" : "hover:bg-myGray"}`}
-                        disabled={isLoading}
+                        className={`bg-myBlue py-2 text-lg rounded w-full ${isRegistering ? "cursor-wait bg-opacity-50" : "hover:bg-myGray"}`}
+                        disabled={isRegistering}
                     >
                         Create Account
                     </button>

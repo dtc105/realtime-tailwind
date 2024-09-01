@@ -27,7 +27,7 @@ function App() {
 		window.addEventListener("resize", handleResize);
 
 		const unSub = onAuthStateChanged(auth, (user) => {
-			fetchUserInfo(user.uid);
+			fetchUserInfo(user?.uid);
 		});
 
 		return(() => {
