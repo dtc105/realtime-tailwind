@@ -17,7 +17,10 @@ function AddUser(props) {
 
         try {
             const userRef = collection(db, "users");
-            const q = query(userRef, where("username", "==", username));
+            const q = query(userRef,
+                where("username", ">=", username),
+                where("username", "<=", username + '\uf8ff')
+            );
             const querySnapShot = await getDocs(q);
 
             if (!querySnapShot.empty) {
@@ -32,7 +35,6 @@ function AddUser(props) {
 
         const chatRef = collection(db, "chats");
         const userChatRef = collection(db, "userchats");
-
 
         try {
 
@@ -63,6 +65,8 @@ function AddUser(props) {
 
         } catch (err) {
             console.log(err);
+        } finally {
+            props.setIsAddingUser(false);
         }
     }
     
